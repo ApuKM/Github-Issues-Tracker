@@ -1,11 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Github Issues Tracker</title>
-</head>
-<body>
-    
-</body>
+    <!-- Daisy UI & Tailwind -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-[#F8FAFC] h-screen flex items-center justify-center">
+      <div class="bg-white p-8 space-y-6">
+        <div>
+            <img class="mx-auto pb-6 max-w-24" src="./assets/github-logo.png" alt="github-logo">
+            <h2 class="text-center text-[#1F2937] font-semibold text-2xl">Github Issues Tracker</h2>
+            <p class="text-center text-[#64748B] text-base">Sign in to manage your issues</p>
+        </div>
+        <fieldset
+          class="fieldset border-base-300 rounded-box w-xs border"
+        >
+          <label class="label">Username</label>
+          <input type="text" class="input" placeholder="Enter Username" />
+
+          <label class="label">Password</label>
+          <input type="password" class="input" placeholder="Enter Password" />
+
+          <button class="btn btn-primary mt-4">Sign In</button>
+        </fieldset>
+        <div class="text-center">
+            <h4 class="mb-6 text-[#1F2937] ">OR</h4>
+            <p class="text-[#64748B] text-sm">Demo Credentials</p>
+            <div class="bg-[#F8FAFC] p-5">
+                <h5 class="text-[#1F2937] ">Username: <span>admin</span></h5>
+                <h5 class="text-[#1F2937] ">Password: <span>admin123</span></h5>
+            </div>
+        </div>
+      </div>
+    </div>
+    <script src="./scripts/script.js"></script>
+  </body>
 </html>
