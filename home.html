@@ -1,11 +1,55 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Github Issues Home</title>
-</head>
-<body>
-    <h3>Home</h3>
-</body>
+    <!-- Daisy UI & Tailwind -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar bg-base-100 shadow-sm px-10">
+        <div class="flex items-center gap-2 flex-1">
+          <img src="./assets/github-logo.png" class="max-w-8" alt="" />
+          <h2 class="text-[#1F2937] text-2xl font-semibold">
+            Github Issues Tracker
+          </h2>
+        </div>
+        <div class="flex gap-2">
+          <div class="relative">
+            <input
+              type="text"
+              placeholder="Search issues"
+              class="input input-bordered w-24 md:w-auto pl-10"
+            />
+            <i
+              class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+            ></i>
+          </div>
+
+          <button class="btn btn-primary">
+            <span><i class="fa-solid fa-plus"></i></span>
+            New Issue
+          </button>
+        </div>
+      </div>
+    </header>
+    <main></main>
+  </body>
 </html>
