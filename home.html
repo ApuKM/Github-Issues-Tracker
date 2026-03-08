@@ -50,13 +50,31 @@
         </div>
       </div>
     </header>
-    <main class="bg-[#F8FAFC] ">
+    <main class="bg-[#F8FAFC]">
       <div class="py-14 space-y-4">
         <div class="w-[90%] mx-auto bg-[#FFFFFF] p-5">
           <div class="flex items-center gap-3">
-            <button onclick="selectCategory(id)" id="btn-all" class="btn btn-primary w-30 toggle-btn">All</button>
-            <button onclick="selectCategory(id)" id="btn-open" class="btn w-30 toggle-btn">Open</button>
-            <button onclick="selectCategory(id)" id="btn-close" class="btn w-30 toggle-btn">Close</button>
+            <button
+              onclick="selectCategory(id)"
+              id="btn-all"
+              class="btn btn-primary w-30 toggle-btn"
+            >
+              All
+            </button>
+            <button
+              onclick="selectCategory(id)"
+              id="btn-open"
+              class="btn w-30 toggle-btn"
+            >
+              Open
+            </button>
+            <button
+              onclick="selectCategory(id)"
+              id="btn-close"
+              class="btn w-30 toggle-btn"
+            >
+              Close
+            </button>
           </div>
         </div>
         <div class="w-[90%] mx-auto">
@@ -85,11 +103,47 @@
               </div>
             </div>
           </div>
-          <div id="card-container" class="bg-[#FBFBFB] p-5 grid grid-cols-4 gap-3">
-
-          </div>
+          <div
+            id="card-container"
+            class="bg-[#FBFBFB] p-5 grid grid-cols-4 gap-3"
+          ></div>
         </div>
       </div>
+
+      <!-- modal from DaisyUi -->
+      <!-- Open the modal using ID.showModal() method -->
+      <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+         <div class="space-y-6">
+           <div>
+          <h2 class="text-2xl text-[#1F2937] font-bold">Heading</h2>
+          <div class="pt-2 flex items-center gap-3">
+            <span class="bg-green-600 px-2 py-1 rounded-full text-white text-xs">Opened</span>
+            <span class="text-[#64748B] text-xs">Opened by <span>Fahim</span></span>
+            <span class="text-[#64748B] text-xs">Date</span>
+          </div>
+          </div>
+          <div>Labels</div>
+          <p class="text-[#64748B]">description</p>
+          <div class="bg-[#F8FAFC] p-4 flex items-center rounded-sm">
+            <div class="flex-1">
+              <h4 class="text-[#64748B]">Assignee:</h4>
+              <h3 class="text-[#1F2937] font-semibold">Name</h3>
+            </div>
+            <div class="flex-1">
+              <h4 class="text-[#64748B]">Priority:</h4>
+              <span class=" text-white text-xs bg-red-500  px-3 py-1 rounded-2xl">Priority name</span>
+            </div>
+          </div>
+         </div>
+          <div class="modal-action">
+            <form method="dialog">
+              <!-- if there is a button in form, it will close the modal -->
+              <button class="btn btn-primary outline-0">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </main>
 
     <script src="./scripts/home.js"></script>

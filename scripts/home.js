@@ -3,6 +3,7 @@ const btnOpen = document.getElementById("btn-open");
 const btnClose = document.getElementById("btn-close");
 const totalIssues = document.getElementById("total-issues");
 const cardContainer = document.getElementById("card-container");
+const myModalCard = document.getElementById("my_modal_5");
 const allButons = document.querySelectorAll(".toggle-btn");
 
 async function fetchIssuesWithStatus(id){
@@ -61,11 +62,10 @@ function handleStatus(status, cardWrapper, priority) {
   }
 }
 
-// function displayTotalIssues(dataArr){
-//   if(dataArr.length === 0){
-
-//   }
-// }
+function showCard(id){
+  myModalCard.showModal();
+  console.log(id)
+}
 
 function displayIssues(dataArr) {
   totalIssues.textContent = dataArr.length;
@@ -74,7 +74,7 @@ function displayIssues(dataArr) {
     const div = document.createElement("div");
     div.innerHTML = `
             <div class="card card-border border-t-3 border-gray-200 bg-white w-fit shadow-lg">
-              <div class="card-body p-4">
+              <div class="card-body p-4 cursor-pointer" onclick="showCard(${data.id})">
                 <div class="flex justify-between items-center">
                   <div>
                     <img  src="./assets/Open-Status.png" alt="" class="hidden open-status-img" />
@@ -92,7 +92,7 @@ function displayIssues(dataArr) {
               </div>
               <hr class="text-gray-200" />
               <div class="p-3">
-                <p class="text-[#64748B] text-xs">${data.assignee ? data.assignee : "unknown_assignee"}</p>
+                <p class="text-[#64748B] text-xs">#1 by ${data.author ? data.author : "unknown_author"}</p>
                 <p class="text-[#64748B] text-xs">${data.createdAt.split("T")[0]}</p>
               </div>
             </div>
