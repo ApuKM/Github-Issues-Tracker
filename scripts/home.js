@@ -1,8 +1,29 @@
 const btnAll = document.getElementById("btn-all");
 const btnOpen = document.getElementById("btn-open");
 const btnClose = document.getElementById("btn-close");
+const totalIssues = document.getElementById("total-issues");
 const cardContainer = document.getElementById("card-container");
 const allButons = document.querySelectorAll(".toggle-btn");
+
+async function fetchIssuesWithStatus(id){
+  try {
+    const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues ");
+    const json = await res.json();
+    const dataArr = json.data;
+    const openDataArr = dataArr.filter(data => data.status.toLowerCase() === "open");
+    const closedDataArr = dataArr.filter(data => data.status.toLowerCase() === "closed")
+
+   if(id === "btn-open"){
+    displayIssues(openDataArr)
+   }else if(id === "btn-close"){
+    displayIssues(closedDataArr)
+   }else{
+    displayIssues(dataArr)
+   }
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 function selectCategory(id) {
   // console.log(id)
@@ -11,6 +32,7 @@ function selectCategory(id) {
     const selectedBtton = btn.id === id;
     if (selectedBtton) {
       btn.classList.add("btn-primary");
+      fetchIssuesWithStatus(id);
     }
   });
 }
@@ -39,7 +61,14 @@ function handleStatus(status, cardWrapper, priority) {
   }
 }
 
+// function displayTotalIssues(dataArr){
+//   if(dataArr.length === 0){
+
+//   }
+// }
+
 function displayIssues(dataArr) {
+  totalIssues.textContent = dataArr.length;
   cardContainer.innerHTML = "";
   dataArr.forEach((data) => {
     const div = document.createElement("div");
