@@ -3,26 +3,32 @@ const btnOpen = document.getElementById("btn-open");
 const btnClose = document.getElementById("btn-close");
 const totalIssues = document.getElementById("total-issues");
 const cardContainer = document.getElementById("card-container");
-const myModalCard = document.getElementById("my_modal_5");
+const openModalCard = document.getElementById("my_modal_5");
 const allButons = document.querySelectorAll(".toggle-btn");
 
-async function fetchIssuesWithStatus(id){
+async function fetchIssuesWithStatus(id) {
   try {
-    const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues ");
+    const res = await fetch(
+      "https://phi-lab-server.vercel.app/api/v1/lab/issues ",
+    );
     const json = await res.json();
     const dataArr = json.data;
-    const openDataArr = dataArr.filter(data => data.status.toLowerCase() === "open");
-    const closedDataArr = dataArr.filter(data => data.status.toLowerCase() === "closed")
+    const openDataArr = dataArr.filter(
+      (data) => data.status.toLowerCase() === "open",
+    );
+    const closedDataArr = dataArr.filter(
+      (data) => data.status.toLowerCase() === "closed",
+    );
 
-   if(id === "btn-open"){
-    displayIssues(openDataArr)
-   }else if(id === "btn-close"){
-    displayIssues(closedDataArr)
-   }else{
-    displayIssues(dataArr)
-   }
+    if (id === "btn-open") {
+      displayIssues(openDataArr);
+    } else if (id === "btn-close") {
+      displayIssues(closedDataArr);
+    } else {
+      displayIssues(dataArr);
+    }
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
@@ -62,9 +68,54 @@ function handleStatus(status, cardWrapper, priority) {
   }
 }
 
-function showCard(id){
-  myModalCard.showModal();
-  console.log(id)
+function showCard(data) {
+  const modalCard = document.getElementById("modal-card");
+  modalCard.innerHTML = "";
+  const div = document.createElement("div");
+  div.classList.add("space-y-6")
+  div.innerHTML = `
+          <div>
+          <h2 class="text-2xl text-[#1F2937] font-bold">${data.title}</h2>
+          <div class="pt-2 flex items-center gap-3">
+            <span class="bg-green-600 px-2 py-1 rounded-full text-white text-xs">opened</span>
+            <span class="text-[#64748B] text-xs">Opened by <span>${data.author ? data.author : "unknown_author"}</span></span>
+            <span class="text-[#64748B] text-xs">${data.updatedAt.split("T")[0]}</span>
+          </div>
+          </div>
+          <div class="flex items-center gap-2 pt-3">
+          ${data.labels.map(
+            (label) => `
+            <h2 class="bg-blue-100 px-3 rounded-lg text-blue-500">${label}</h2>
+            `,
+          ).join("")}</div>
+          <p class="text-[#64748B]">${data.description}</p>
+          <div class="bg-[#F8FAFC] p-4 flex items-center rounded-sm">
+            <div class="flex-1">
+              <h4 class="text-[#64748B]">Assignee:</h4>
+              <h3 class="text-[#1F2937] font-semibold">${data.assignee ? data.assignee : "unknown_assignee"}</h3>
+            </div>
+            <div class="flex-1">
+              <h4 class="text-[#64748B]">Priority:</h4>
+              <span class=" text-white text-xs bg-red-500  px-3 py-1 rounded-2xl">${data.priority}</span>
+            </div>
+  `;
+  modalCard.appendChild(div);
+}
+
+async function loadCard(id) {
+  try {
+    const res = await fetch(
+      `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`,
+    );
+    const json = await res.json();
+    const data = json.data;
+    // console.log(data)
+    showCard(data);
+    openModalCard.showModal();
+    // console.log(id)
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function displayIssues(dataArr) {
@@ -74,7 +125,7 @@ function displayIssues(dataArr) {
     const div = document.createElement("div");
     div.innerHTML = `
             <div class="card card-border border-t-3 border-gray-200 bg-white w-fit shadow-lg">
-              <div class="card-body p-4 cursor-pointer" onclick="showCard(${data.id})">
+              <div class="card-body p-4 cursor-pointer" onclick="loadCard(${data.id})">
                 <div class="flex justify-between items-center">
                   <div>
                     <img  src="./assets/Open-Status.png" alt="" class="hidden open-status-img" />
