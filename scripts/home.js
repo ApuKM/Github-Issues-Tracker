@@ -4,7 +4,11 @@ const btnClose = document.getElementById("btn-close");
 const totalIssues = document.getElementById("total-issues");
 const cardContainer = document.getElementById("card-container");
 const openModalCard = document.getElementById("my_modal_5");
+const btnSearch = document.getElementById("btn-search");
+const searchInput = document.getElementById("search-input");
+const issuesWord = document.getElementById("issues-word");
 const allButons = document.querySelectorAll(".toggle-btn");
+let allIssues = [];
 
 async function fetchIssuesWithStatus(id) {
   try {
@@ -68,26 +72,53 @@ function handleStatus(status, cardWrapper, priority) {
   }
 }
 
+function handleSearch(input) {
+  if (input.trim() === "") {
+    displayIssues(allIssues);
+    return;
+  }
+  // console.log(allIssues)
+  const filteredIssues = allIssues.filter(
+    (issue) =>
+      issue.title.toLowerCase().includes(input) ||
+      issue.description.toLowerCase().includes(input),
+  );
+  // console.log(filteredIssues);
+  displayIssues(filteredIssues);
+}
+
+btnSearch.addEventListener("click", () => {
+  const searchInputVal = searchInput.value.toLowerCase();
+  // console.log(searchInputVal)
+
+  handleSearch(searchInputVal);
+  searchInput.value = "";
+});
+
 function showCard(data) {
   const modalCard = document.getElementById("modal-card");
   modalCard.innerHTML = "";
   const div = document.createElement("div");
-  div.classList.add("space-y-6")
+  div.classList.add("space-y-6");
   div.innerHTML = `
           <div>
           <h2 class="text-2xl text-[#1F2937] font-bold">${data.title}</h2>
           <div class="pt-2 flex items-center gap-3">
-            <span class="bg-green-600 px-2 py-1 rounded-full text-white text-xs">opened</span>
-            <span class="text-[#64748B] text-xs">Opened by <span>${data.author ? data.author : "unknown_author"}</span></span>
+            <span class="bg-green-600 px-2 py-1 rounded-full text-white text-xs">Opened</span>
+            <span class="text-gray-400">•</span>
+            <span class="text-[#64748B] text-xs">opened by <span>${data.author ? data.author : "unknown_author"}</span></span>
+            <span class="text-gray-400">•</span>
             <span class="text-[#64748B] text-xs">${data.updatedAt.split("T")[0]}</span>
           </div>
           </div>
           <div class="flex items-center gap-2 pt-3">
-          ${data.labels.map(
-            (label) => `
+          ${data.labels
+            .map(
+              (label) => `
             <h2 class="bg-blue-100 px-3 rounded-lg text-blue-500">${label}</h2>
             `,
-          ).join("")}</div>
+            )
+            .join("")}</div>
           <p class="text-[#64748B]">${data.description}</p>
           <div class="bg-[#F8FAFC] p-4 flex items-center rounded-sm">
             <div class="flex-1">
@@ -96,7 +127,7 @@ function showCard(data) {
             </div>
             <div class="flex-1">
               <h4 class="text-[#64748B]">Priority:</h4>
-              <span class=" text-white text-xs bg-red-500  px-3 py-1 rounded-2xl">${data.priority}</span>
+              <span class=" text-white text-xs bg-red-500  px-3 font-light rounded-2xl">${data.priority.toUpperCase()}</span>
             </div>
   `;
   modalCard.appendChild(div);
@@ -120,6 +151,11 @@ async function loadCard(id) {
 
 function displayIssues(dataArr) {
   totalIssues.textContent = dataArr.length;
+  if(dataArr.length === 0 || dataArr.length === 1){
+    issuesWord.textContent = "Issue"
+  }else{
+    issuesWord.textContent = "Issues"
+  }
   cardContainer.innerHTML = "";
   dataArr.forEach((data) => {
     const div = document.createElement("div");
@@ -159,10 +195,8 @@ async function loadIssues() {
       "https://phi-lab-server.vercel.app/api/v1/lab/issues",
     );
     const json = await res.json();
-    // console.log(data)
-    const dataArr = json.data;
-    // console.log(dataArr)
-    displayIssues(dataArr);
+    allIssues = json.data;
+    displayIssues(allIssues);
   } catch (error) {
     console.log(error);
   }

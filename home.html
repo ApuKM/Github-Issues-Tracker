@@ -34,6 +34,7 @@
         <div class="flex gap-2">
           <div class="relative">
             <input
+            id="search-input"
               type="text"
               placeholder="Search issues"
               class="input input-bordered w-24 md:w-auto pl-10"
@@ -43,7 +44,7 @@
             ></i>
           </div>
 
-          <button class="btn btn-primary flex items-center">
+          <button id="btn-search" class="btn btn-primary flex items-center">
             <span><i class="fa-brands fa-sistrix"></i></span>
             Search
           </button>
@@ -85,7 +86,7 @@
               </div>
               <div>
                 <h2 class="text-[#1F2937] text-xl font-semibold">
-                  <span id="total-issues">10</span> Issues
+                  <span id="total-issues">10</span> <span id="issues-word">Issues</span>
                 </h2>
                 <p class="text-[#64748B]">
                   Track and manage your project issues
