@@ -1,129 +1,14 @@
-# 🌟 Welcome To (সহজ সরল সিম্পল) Assignment - 5
+1.What is the difference between var, let, and const?
+Answer: var, let, and const are used to declare variables, but they differ in scope and reassignment rules. var has function scope and it is hoisted(var exist in memory from the beginning of the function but are initialized as undefined until the assignment line). It can be redeclared and reassigned, which sometimes leads to unexpected behavior. let and const have block scope, meaning they only exist within the block where they are defined. let allows reassignment but does not allow redeclaration in the same scope. const is used for variables whose value should not change after initialization, so it cannot be reassigned.let and const are also hoisted, but they are in a “temporal dead zone”, so accessing them before declaration gives a ReferenceError instead of undefined
 
-# **📅 Deadline For 60 marks:** 9th March, 2026 (11:59 pm ⏱️)  
-#  📅 No Deadline For 50 marks  
-# **📅 Deadline For 30 marks:** Any time after 9th March.
+2.What is the spread operator (...)?
+Answer: The spread operator (...) is a syntax that allows us to expand or “spread” elements of an array or properties of an object wherever multiple values are expected. It’s often used for copying arrays/objects, merging them, or passing elements as individual arguments to a function. The spread operator does not change the original array or object; it creates a new copy with the values spread into it. This is called immutability.
 
----
+3.What is the difference between map(), filter(), and forEach()?
+Answer: map(), filter(), and forEach() are array methods used to work with arrays, but they serve different purposes. map() is used to transform each element in an array and returns a new array with the transformed values, leaving the original array unchanged. filter() is used to select elements that meet a certain condition and also returns a new array containing only those elements. On the other hand, forEach() is used to execute a function on each element of an array but does not return anything; it is typically used for performing side effects like logging or updating UI elements.
 
-# Assignment-05: GitHub Issues Tracker
+4.What is an arrow function?
+Answer: An arrow function is a concise way to write functions using the => syntax. It provides a shorter syntax compared to traditional function expressions and is often used for inline functions or callbacks. Arrow functions automatically inherit the "this" value from their surrounding scope, which makes them especially useful in situations where maintaining context is important, such as inside object methods or event handlers. They can return values implicitly when written in a single line, making code cleaner and more readable.
 
-
-### **API Endpoints:**
-###  **All Issues:** 
-  - https://phi-lab-server.vercel.app/api/v1/lab/issues 
-
-
-###  **Single Issue:**
-   - https://phi-lab-server.vercel.app/api/v1/lab/issue/{id}
-
-   - Example: https://phi-lab-server.vercel.app/api/v1/lab/issue/33
-
-
-###  **Search Issue:** https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q={searchText}
-
-   - Example:  https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=notifications
-
-
----
-
-## 📝 Main Requirements
-
-## 🎨 Design Part
-
-## Login Page
-- Create a login page containing a logo, title, and sub-title
-- Below that, there will be 2 inputs, a sign-in button, and a demo credential to sign in. Follow the Figma for this page 
-- Styled as per Figma
-
-## Main Page: 
-
-### Navbar: 
-
-- Navbar with website logo/name on the left
-- Search input and button on the right
-
-### Tab Section like Figma: 
-
-- 3 tab ( All, Open, Closed) at the top of this section.(**All**, **Open**, **Closed**)
-
-- Below the tab, there will be an icon, the issue count, some text on the left, and an open and closed marker on the right
-
-- Responsiveness: The website should be responsive for mobile devices. It is totally up to you. 
-
-
---- 
-
-
-## ⚙️ Functionalities
-- In login page, there will be default admin credentials (username, password). You need to sign in using these credentials.
-
-- Load all issues and display as per Figma
-
-- On clicking on an open or closed tab, it will load the issues data of the related tab and show it in a display-like card in a 4-column layout like Figma. By default, it will show all data 
-
-- Each card shows:
-  - Title
-  - Description
-  - Status
-  - Category
-  - Author
-  - Priority
-  - Label
-  - CreatedAt
-- Clicking on an issue  card will open a modal and show all the information about that Issue. 
-
-### 🚀 Challenges
-
-
-- Show the card Top border based on their category(open, closed), open card will have Green Boder, closed card will have a purple border on top. 
-
-- Loading spinner on data load
-
-- Show active button on changing category names
-
-- Implement Search Functionality and 8 meaningful github commit.  
-
-- Create a readme file and answer this question on your own. Don’t copy-paste from Google or any AI chatbot. 
-    - 1️⃣ What is the difference between var, let, and const?
-    - 2️⃣ What is the spread operator (...)?
-    - 3️⃣ What is the difference between map(), filter(), and forEach()?
-    - 4️⃣ What is an arrow function?
-    - 5️⃣ What are template literals?
-
-
----
-
-## 🛠️ Technology Stack
-
-- **HTML**
-- **CSS** (Vanilla/Tailwind/DaisyUI)
-- **JavaScript** (Vanilla)
-
----
-
-## 🔑 Demo Credentials
-
-```text
-Username: admin
-Password: admin123
-```
-
-
----
-
-### Optional: 
- - No need to show status: Open, Closed styles On modals. 
- - No Need to show icon on labels 
- - No need to apply styles on Priority 
---- 
-
-
-## 📤 What to submit
-
-- **GitHub Repository Link:**
-- **Live Site Link:**
-
----
-
-
+5.What are template literals?
+Answer: Template literals are a modern way to work with strings using backticks (`) instead of regular quotes. They allow you to embed variables or expressions directly inside a string using ${} syntax, making string construction much easier and more readable. Template literals also support multi-line strings without the need for special characters or concatenation. This makes them very useful for creating dynamic messages, HTML templates, or any situation where combining variables and text is needed, resulting in cleaner and more maintainable code.

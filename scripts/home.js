@@ -7,20 +7,15 @@ const openModalCard = document.getElementById("my_modal_5");
 const btnSearch = document.getElementById("btn-search");
 const searchInput = document.getElementById("search-input");
 const issuesWord = document.getElementById("issues-word");
+const spinner = document.getElementById("loading-spinner");
 const allButons = document.querySelectorAll(".toggle-btn");
 let allIssues = [];
 
-async function fetchIssuesWithStatus(id) {
-  try {
-    const res = await fetch(
-      "https://phi-lab-server.vercel.app/api/v1/lab/issues ",
-    );
-    const json = await res.json();
-    const dataArr = json.data;
-    const openDataArr = dataArr.filter(
+ function fetchIssuesWithStatus(id) {
+    const openDataArr = allIssues.filter(
       (data) => data.status.toLowerCase() === "open",
     );
-    const closedDataArr = dataArr.filter(
+    const closedDataArr = allIssues.filter(
       (data) => data.status.toLowerCase() === "closed",
     );
 
@@ -29,10 +24,15 @@ async function fetchIssuesWithStatus(id) {
     } else if (id === "btn-close") {
       displayIssues(closedDataArr);
     } else {
-      displayIssues(dataArr);
+      displayIssues(allIssues);
     }
-  } catch (error) {
-    console.log(error);
+}
+
+function handleSpinner(status){
+  if(status){
+    spinner.classList.remove("hidden")
+  }else{
+    spinner.classList.add("hidden");
   }
 }
 
@@ -43,7 +43,9 @@ function selectCategory(id) {
     const selectedBtton = btn.id === id;
     if (selectedBtton) {
       btn.classList.add("btn-primary");
+      handleSpinner(true)
       fetchIssuesWithStatus(id);
+      handleSpinner(false)
     }
   });
 }
@@ -76,10 +78,11 @@ function handleStatus(status, cardWrapper, priority) {
 btnSearch.addEventListener("click", async() => {
   const searchInputVal = searchInput.value.toLowerCase();
   try {
-      const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchInputVal}`);
+    handleSpinner(true);
+  const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchInputVal}`);
   const json = await res.json();
   const searchedIssues = json.data;
-  console.log(searchedIssues)
+  // console.log(searchedIssues)
    if (searchInputVal.trim() === "") {
     displayIssues(allIssues);
     return;
@@ -89,6 +92,8 @@ btnSearch.addEventListener("click", async() => {
   searchInput.value = "";
   } catch (error) {
     console.log(error)
+  } finally {
+    handleSpinner(false)
   }
 
 });
@@ -106,7 +111,7 @@ function showCard(data) {
             <span class="text-gray-400">•</span>
             <span class="text-[#64748B] text-xs">opened by <span>${data.author ? data.author : "unknown_author"}</span></span>
             <span class="text-gray-400">•</span>
-            <span class="text-[#64748B] text-xs">${data.updatedAt.split("T")[0]}</span>
+            <span class="text-[#64748B] text-xs">${data.createdAt.split("T")[0]}</span>
           </div>
           </div>
           <div class="flex items-center gap-2 pt-3">
@@ -149,16 +154,21 @@ async function loadCard(id) {
 
 function displayIssues(dataArr) {
   totalIssues.textContent = dataArr.length;
-  if(dataArr.length === 0 || dataArr.length === 1){
-    issuesWord.textContent = "Issue"
-  }else{
-    issuesWord.textContent = "Issues"
-  }
+  issuesWord.textContent = dataArr.length === 1 ? "Issue" : "Issues";
+  if (dataArr.length === 0) {
+  cardContainer.innerHTML = `
+    <div class="text-center py-10 text-gray-600 text-2xl flex items-center gap-2">
+     <i class="fa-solid fa-face-laugh"></i>
+      No issues found
+    </div>
+  `;
+  return;
+}
   cardContainer.innerHTML = "";
   dataArr.forEach((data) => {
     const div = document.createElement("div");
     div.innerHTML = `
-            <div class="card card-border border-t-3 border-gray-200 bg-white w-fit shadow-lg">
+            <div class="card card-border border-t-3 border-gray-200 bg-white w-fit shadow-lg hover:shadow-xl transition">
               <div class="card-body p-4 cursor-pointer" onclick="loadCard(${data.id})">
                 <div class="flex justify-between items-center">
                   <div>
@@ -172,7 +182,7 @@ function displayIssues(dataArr) {
                   ${data.description}
                 </p>
                 <div class="flex items-center gap-2 pt-3">
-                  ${data.labels.map((label) => `<h4 class="bg-blue-100 px-3 rounded-lg text-blue-500">${label}</h4>`).join("")}
+                  ${data.labels.map((label) => `<h4 class="bg-yellow-100 px-3 rounded-lg text-yellow-500">${label}</h4>`).join("")}
                 </div>
               </div>
               <hr class="text-gray-200" />
@@ -189,6 +199,7 @@ function displayIssues(dataArr) {
 
 async function loadIssues() {
   try {
+    handleSpinner(true);
     const res = await fetch(
       "https://phi-lab-server.vercel.app/api/v1/lab/issues",
     );
@@ -198,6 +209,8 @@ async function loadIssues() {
     displayIssues(dataArr);
   } catch (error) {
     console.log(error);
+  } finally{
+    handleSpinner(false)
   }
 }
 
