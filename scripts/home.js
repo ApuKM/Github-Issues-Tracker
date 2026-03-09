@@ -72,27 +72,25 @@ function handleStatus(status, cardWrapper, priority) {
   }
 }
 
-function handleSearch(input) {
-  if (input.trim() === "") {
+
+btnSearch.addEventListener("click", async() => {
+  const searchInputVal = searchInput.value.toLowerCase();
+  try {
+      const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchInputVal}`);
+  const json = await res.json();
+  const searchedIssues = json.data;
+  console.log(searchedIssues)
+   if (searchInputVal.trim() === "") {
     displayIssues(allIssues);
     return;
+  }else{
+    displayIssues(searchedIssues);
   }
-  // console.log(allIssues)
-  const filteredIssues = allIssues.filter(
-    (issue) =>
-      issue.title.toLowerCase().includes(input) ||
-      issue.description.toLowerCase().includes(input),
-  );
-  // console.log(filteredIssues);
-  displayIssues(filteredIssues);
-}
-
-btnSearch.addEventListener("click", () => {
-  const searchInputVal = searchInput.value.toLowerCase();
-  // console.log(searchInputVal)
-
-  handleSearch(searchInputVal);
   searchInput.value = "";
+  } catch (error) {
+    console.log(error)
+  }
+
 });
 
 function showCard(data) {
@@ -195,8 +193,9 @@ async function loadIssues() {
       "https://phi-lab-server.vercel.app/api/v1/lab/issues",
     );
     const json = await res.json();
-    allIssues = json.data;
-    displayIssues(allIssues);
+    const dataArr = json.data;
+    allIssues = dataArr;
+    displayIssues(dataArr);
   } catch (error) {
     console.log(error);
   }
